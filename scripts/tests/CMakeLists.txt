@@ -87,4 +87,4 @@ add_custom_target(transform_android_profiles ALL
     COMMENT "Testing vkprofiles with Android Vulkan profiles..."
     VERBATIM
 )
-add_dependencies(transform_android_profiles VpProfilesProcessor python_venv)
+add_dependencies(transform_android_profiles VpProfilesProcessor)

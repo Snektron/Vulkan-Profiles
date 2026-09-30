@@ -47,33 +47,6 @@ set(PROFILES_SCRIPT ${PROJECT_SOURCE_DIR}/scripts/vkprofiles.py)
 # We need Python 3.10 or better to use pyinstaller 6.
 find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
 
-# Some Python-based build operations (e.g. turning a Python script into a standalone
-# executable) require custom Python modules. Here we'll create a custom
-# Python virtual environment with the modules we need.
-set(VENV_DIR "${CMAKE_CURRENT_BINARY_DIR}/python-venv")
-if(WIN32)
-    set(VENV_PYTHON_EXECUTABLE "${VENV_DIR}/Scripts/python.exe")
-else()
-    set(VENV_PYTHON_EXECUTABLE "${VENV_DIR}/bin/python3")
-endif()
-
-# VENV_STAMP is used as a dependency for any target using the venv, to ensure
-# that if the venv's dependencies are changed, the venv will be updated.
-set(VENV_STAMP "${VENV_DIR}/venv.stamp")
-
-add_custom_command(
-    OUTPUT "${VENV_STAMP}"
-    COMMAND ${Python3_EXECUTABLE} -m venv "${VENV_DIR}"
-    COMMAND "${VENV_PYTHON_EXECUTABLE}" -m pip install --no-cache-dir -r "${CMAKE_CURRENT_SOURCE_DIR}/requirements.txt"
-    COMMAND ${CMAKE_COMMAND} -E touch "${VENV_STAMP}"
-    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/requirements.txt"
-    COMMENT "Creating Python virtual environment and installing dependencies..."
-    VERBATIM
-)
-
-# This target works in subdirectories as a dependency.
-add_custom_target(python_venv DEPENDS "${VENV_STAMP}")
-
 # ==============================================================================
 
 find_package(VulkanHeaders REQUIRED CONFIG QUIET)
@@ -147,7 +120,7 @@ function(add_pyinstaller_target TARGET_NAME)
     add_custom_command(
         OUTPUT "${FINAL_EXECUTABLE}"
         COMMAND "${VENV_PYTHON_EXECUTABLE}" -m PyInstaller --onefile --clean ${PYINSTALLER_PATH_FLAGS} --name "${ARG_OUTPUT_NAME}" --distpath "${ARG_OUTPUT_DIR}" "${ARG_SCRIPT}"
-        DEPENDS ${ARG_DEPENDS} python_venv
+        DEPENDS ${ARG_DEPENDS}
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         COMMENT "Packaging ${TARGET_NAME} into a standalone executable..."
         VERBATIM
@@ -197,7 +170,6 @@ add_pyinstaller_target(VpProfilesProcessor
     DEPENDS ${PYTHON_DEPENDENCIES}
     FOLDER "Profiles generator"
 )
-add_dependencies(VpProfilesProcessor python_venv)
 
 if(WIN32)
     set(VKPROFILES_INSTALL_DIR "Bin")

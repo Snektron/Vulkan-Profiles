@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: 
+# Authors:
 # - Christophe Riccio <christophe@lunarg.com>
 # ~~~
 
@@ -159,7 +159,7 @@ target_sources(ProfilesLayer PRIVATE
 )
 
 target_link_libraries(ProfilesLayer PRIVATE
-    Vulkan::CompilerConfiguration 
+    Vulkan::CompilerConfiguration
     Vulkan::CompilerConfigurationExtra
     Vulkan::LayerSettings
     Vulkan::Headers
@@ -181,8 +181,7 @@ add_custom_target(VpLayer_generate ALL
     VERBATIM
     DEPENDS ${VULKAN_HEADERS_INSTALL_DIR}/${CMAKE_INSTALL_DATADIR}/vulkan/registry/vk.xml
             ${VULKAN_HEADERS_INSTALL_DIR}/${CMAKE_INSTALL_DATADIR}/vulkan/registry/video.xml
-            VpProfilesProcessor
-            python_venv)
+            VpProfilesProcessor)
 set_target_properties(VpLayer_generate PROPERTIES FOLDER "Profiles layer")
 add_dependencies(ProfilesLayer VpLayer_generate)
 
@@ -196,7 +195,6 @@ add_custom_target(VpLayer_generate_tests ALL
     DEPENDS ProfilesLayer
             VpLayer_generate
             VpProfilesProcessor
-            python_venv
 )
 set_target_properties(VpLayer_generate_tests PROPERTIES FOLDER "Profiles layer")
 
