@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: 
+# Authors:
 # - Christophe Riccio <christophe@lunarg.com>
 # ~~~
 
@@ -36,7 +36,7 @@ add_custom_target(VpGenerate-Test-Profiles
         --input ${CMAKE_CURRENT_LIST_DIR}/vkprofiles_test_graph.json
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     VERBATIM
-    DEPENDS VpGenerate-Profiles python_venv)
+    DEPENDS VpGenerate-Profiles)
 
 add_custom_target(VpLibrary_test_generated_library
     COMMAND ${VKPROFILES_EXE} library
@@ -49,8 +49,7 @@ add_custom_target(VpLibrary_test_generated_library
     SOURCES ${CMAKE_CURRENT_LIST_DIR}/profiles
     DEPENDS ${CMAKE_CURRENT_LIST_DIR}/profiles
             ${VULKAN_HEADERS_INSTALL_DIR}/${CMAKE_INSTALL_DATADIR}/vulkan/registry/vk.xml
-            VpProfilesProcessor
-            python_venv)
+            VpProfilesProcessor)
 set_target_properties(VpLibrary_test_generated_library PROPERTIES FOLDER "Profiles API library")
 add_dependencies(VpLibrary_test_generated_library VpGenerate-Profiles)
 add_dependencies(VpLibrary_test_generated_library VpGenerate-Test-Profiles)

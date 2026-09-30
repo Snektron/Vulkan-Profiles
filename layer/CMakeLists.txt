@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: 
+# Authors:
 # - Christophe Riccio <christophe@lunarg.com>
 # ~~~
 
@@ -159,7 +159,7 @@ target_sources(ProfilesLayer PRIVATE
 )
 
 target_link_libraries(ProfilesLayer PRIVATE
-    Vulkan::CompilerConfiguration 
+    Vulkan::CompilerConfiguration
     Vulkan::CompilerConfigurationExtra
     Vulkan::LayerSettings
     Vulkan::Headers
@@ -196,7 +196,6 @@ add_custom_target(VpLayer_generate_tests ALL
     DEPENDS ProfilesLayer
             VpLayer_generate
             VpProfilesProcessor
-            python_venv
 )
 set_target_properties(VpLayer_generate_tests PROPERTIES FOLDER "Profiles layer")
 

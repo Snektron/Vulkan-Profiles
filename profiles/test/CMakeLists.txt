@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Authors: 
+# Authors:
 # - Christophe Riccio <christophe@lunarg.com>
 # ~~~
 
@@ -32,8 +32,8 @@ source_group("JSON Schema" FILES ${SCHEMA_PROFILE})
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
 add_executable(${TEST_NAME} ${TEST_FILE} ${FILES_PROFILE} ${FILES_UNIT_TEST} ${SCHEMA_PROFILE})
-target_compile_definitions(${TEST_NAME} PRIVATE 
-    PROFILES_SCHEMA_FILENAME="${CMAKE_SOURCE_DIR}/schema/${PROFILES_SCHEMA_FILENAME}" 
+target_compile_definitions(${TEST_NAME} PRIVATE
+    PROFILES_SCHEMA_FILENAME="${CMAKE_SOURCE_DIR}/schema/${PROFILES_SCHEMA_FILENAME}"
     JSON_TEST_FILES_PATH="${CMAKE_SOURCE_DIR}/profiles/test/data/"
     PROFILE_FILES_PATH="${CMAKE_SOURCE_DIR}/profiles/")
 target_link_libraries(${TEST_NAME} PRIVATE GTest::gtest GTest::gtest_main jsoncpp_static valijson)
@@ -57,7 +57,7 @@ add_custom_target(VpTestIntersect ALL
         --mode intersection
     VERBATIM
     SOURCES ${FILES_UNIT_TEST}
-    DEPENDS ${FILES_UNIT_TEST} python_venv)
+    DEPENDS ${FILES_UNIT_TEST})
 set_target_properties(VpTestIntersect PROPERTIES FOLDER "Profiles generator/Tests")
 add_dependencies(VpTestIntersect VpProfilesProcessor)
 
@@ -70,7 +70,7 @@ add_custom_target(VpTestUnion ALL
         --mode union
     VERBATIM
     SOURCES ${FILES_UNIT_TEST}
-    DEPENDS ${FILES_UNIT_TEST} python_venv)
+    DEPENDS ${FILES_UNIT_TEST})
 set_target_properties(VpTestUnion PROPERTIES FOLDER "Profiles generator/Tests")
 add_dependencies(VpTestUnion VpProfilesProcessor)
 
@@ -81,7 +81,7 @@ add_custom_target(VpTestGeneratedName ALL
         --output ${CMAKE_CURRENT_SOURCE_DIR}/data/VP_LUNARG_test_generated_name.json
     VERBATIM
     SOURCES ${FILES_UNIT_TEST}
-    DEPENDS ${FILES_UNIT_TEST} python_venv)
+    DEPENDS ${FILES_UNIT_TEST})
 set_target_properties(VpTestGeneratedName PROPERTIES FOLDER "Profiles generator/Tests")
 add_dependencies(VpTestGeneratedName VpProfilesProcessor)
 
@@ -92,6 +92,6 @@ add_custom_target(VpTestHostImageCopy ALL
         --output ${CMAKE_CURRENT_SOURCE_DIR}/data/VP_LUNARG_test_host_image_copy.json
     VERBATIM
     SOURCES ${FILES_UNIT_TEST}
-    DEPENDS ${FILES_UNIT_TEST} python_venv)
+    DEPENDS ${FILES_UNIT_TEST})
 set_target_properties(VpTestHostImageCopy PROPERTIES FOLDER "Profiles generator/Tests")
 add_dependencies(VpTestHostImageCopy VpProfilesProcessor)
